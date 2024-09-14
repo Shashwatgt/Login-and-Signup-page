@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import Login from "../components/Authentication/Login";
-import  Signup from "../components/Authentication/Signup";
+import Signup from "../components/Authentication/Signup";
 
 const Homepage = () => {
   return <Container maxW="xl" centerContent>

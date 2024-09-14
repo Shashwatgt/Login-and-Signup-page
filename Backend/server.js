@@ -11,8 +11,6 @@ const {
 } = require("./middlerequest/errormiddlehandler");
 dotenv.config();
 
-const { chats } = require("./data/data");
-
 connectdb();
 app.use(express.json()); //to accept JSON data
 
@@ -21,10 +19,6 @@ app.use(
     origin: "*",
   })
 );
-
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
 
 app.use("/api/user", userRoutes);
 

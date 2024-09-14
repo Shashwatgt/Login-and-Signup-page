@@ -2,15 +2,42 @@ import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
+import axios from "axios";
 import { useState } from "react";
+import { useToast } from "@chakra-ui/toast";
+
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const toast = useToast();
 
-const submitHandler=()=>{};
+  const login = ()=>{
+    axios.post("http://localhost:3000/api/user/login", {
+      email: email,
+      password: password
+    })
+    .then(()=>{
+       toast({
+        title: "Logged in successfully",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    })
+    .catch((e)=>{
+       toast({
+        title: e.response.data.message,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    })
+  }
 
   return (
     <VStack spacing='5px'>
@@ -20,6 +47,7 @@ const submitHandler=()=>{};
         <Input
           placeholder="Enter Your E-mail address"
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
       </FormControl>
 
@@ -29,6 +57,7 @@ const submitHandler=()=>{};
           <Input
             type={show ? "text" : "password"}
             placeholder="Enter Password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
@@ -43,7 +72,7 @@ const submitHandler=()=>{};
         colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
-        onClick={submitHandler}
+        onClick={login}
       >
         Log In
       </Button>
